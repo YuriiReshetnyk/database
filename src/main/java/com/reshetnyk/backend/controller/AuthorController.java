@@ -52,4 +52,16 @@ public class AuthorController {
         authorService.delete(authorId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @PostMapping(value = "/add")
+    public ResponseEntity<?> insertIntoAuthor(String fullName, String photo, String authorInformation) {
+        authorService.insertIntoAuthor(fullName, photo, authorInformation);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping(value = "add10")
+    public ResponseEntity<?> insert10IntoAuthor() {
+        authorService.insert10IntoAuthor();
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }

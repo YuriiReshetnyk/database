@@ -21,6 +21,7 @@ public class CourseDtoAssembler implements RepresentationModelAssembler<Course, 
                 .price(entity.getPrice())
                 .introduction(entity.getIntroduction())
                 .startTime(entity.getStartTime())
+                .topic(entity.getTopic().getName())
                 .build();
         Link selfLink = linkTo(methodOn(CourseController.class).getCourse(courseDto.getId())).withSelfRel();
         courseDto.add(selfLink);

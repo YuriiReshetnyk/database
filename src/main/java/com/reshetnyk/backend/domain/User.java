@@ -35,6 +35,9 @@ public class User {
     private String password;
     @OneToMany(mappedBy = "user")
     private List<UserProgress> userProgresses;
+
+    @OneToMany(mappedBy = "user")
+    private List<ExtraTable> extraTables;
     @ManyToMany
     @JoinTable(name = "user_course", catalog = "", schema = "reshetnyk", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false), inverseJoinColumns = @JoinColumn(name = "course_id", referencedColumnName = "id", nullable = false))
     private Set<Course> courses;
@@ -122,6 +125,14 @@ public class User {
 
     public void setUserProgresses(List<UserProgress> userProgresses) {
         this.userProgresses = userProgresses;
+    }
+
+    public List<ExtraTable> getExtraTables() {
+        return extraTables;
+    }
+
+    public void setExtraTables(List<ExtraTable> extraTables) {
+        this.extraTables = extraTables;
     }
 
     public Set<Course> getCourses() {

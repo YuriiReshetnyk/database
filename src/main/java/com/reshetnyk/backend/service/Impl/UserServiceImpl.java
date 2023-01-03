@@ -8,6 +8,7 @@ import com.reshetnyk.backend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -16,29 +17,28 @@ public class UserServiceImpl implements UserService {
     @Autowired
     UserRepository userRepository;
 
-    @Override
     public List<User> findAll() {
         return userRepository.findAll();
     }
 
-    @Override
     public User findById(Integer id) {
         return userRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException(id));
     }
 
-    @Override
+    @Transactional
     public User create(User user) {
         userRepository.save(user);
         return user;
     }
 
-    @Override
+    @Transactional
     public void update(Integer id, User uUser) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException(id));
         user.setUserName(uUser.getUserName());
         user.setFirstName(uUser.getFirstName());
+        user.setMiddleName(uUser.getMiddleName());
         user.setLastName(uUser.getLastName());
         user.setEmail(uUser.getEmail());
         user.setPassword(uUser.getPassword());
@@ -46,11 +46,17 @@ public class UserServiceImpl implements UserService {
         userRepository.save(uUser);
     }
 
-    @Override
+    @Transactional
     public void delete(Integer id) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException(id));
         if (!user.getUserProgresses().isEmpty()) throw new UserProgressExistForUserException(id, user.getUserProgresses());
         userRepository.delete(user);
+    }
+
+    @Override
+    @Transactional
+    public void dynamicProcedure(){
+        userRepository.dynamicProcedure();
     }
 }

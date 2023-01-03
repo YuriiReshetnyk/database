@@ -1,4 +1,4 @@
-USE my_library;
+USE reshetnyk;
 
 INSERT INTO `topic`(`name`) 
 VALUES ('ІТ'),

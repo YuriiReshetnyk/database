@@ -1,5 +1,5 @@
-CREATE DATABASE IF NOT EXISTS my_library;
-USE my_library;
+CREATE DATABASE IF NOT EXISTS reshetnyk;
+USE reshetnyk;
 
 DROP TABLE IF EXISTS course_author;
 DROP TABLE IF EXISTS answer_option;
@@ -10,6 +10,7 @@ DROP TABLE IF EXISTS module;
 DROP TABLE IF EXISTS user_course;
 DROP TABLE IF EXISTS course;
 DROP TABLE IF EXISTS topic;
+DROP TABLE IF EXISTS extra_table;
 DROP TABLE IF EXISTS `user`;
 DROP TABLE IF EXISTS author;
 
@@ -96,6 +97,13 @@ CREATE TABLE user_progress (
   end_timestamp TIMESTAMP NOT NULL,
   user_id INT NOT NULL,
   task_id INT NOT NULL
+);
+
+CREATE TABLE extra_table(
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  string_colum VARCHAR(255),
+  int_colum INT,
+  foreign_user_id INT
 );
 
 ALTER TABLE user_progress

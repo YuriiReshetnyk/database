@@ -8,6 +8,7 @@ import com.reshetnyk.backend.service.TopicService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -16,24 +17,22 @@ public class TopicServiceImpl implements TopicService {
     @Autowired
     TopicRepository topicRepository;
 
-    @Override
     public List<Topic> findAll() {
         return topicRepository.findAll();
     }
 
-    @Override
     public Topic findById(Integer id) {
         return topicRepository.findById(id)
                 .orElseThrow(() -> new TopicNotFoundException(id));
     }
 
-    @Override
+    @Transactional
     public Topic create(Topic Topic) {
         topicRepository.save(Topic);
         return Topic;
     }
 
-    @Override
+    @Transactional
     public void update(Integer id, Topic uTopic) {
         Topic topic = topicRepository.findById(id)
                 .orElseThrow(() -> new TopicNotFoundException(id));
@@ -41,7 +40,7 @@ public class TopicServiceImpl implements TopicService {
         topicRepository.save(topic);
     }
 
-    @Override
+    @Transactional
     public void delete(Integer id) {
         Topic topic = topicRepository.findById(id)
                 .orElseThrow(() -> new TopicNotFoundException(id));

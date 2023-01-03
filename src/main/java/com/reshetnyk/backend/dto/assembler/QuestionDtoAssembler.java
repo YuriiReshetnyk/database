@@ -18,6 +18,7 @@ public class QuestionDtoAssembler implements RepresentationModelAssembler<Questi
                 .id(entity.getId())
                 .question(entity.getQuestion())
                 .photo(entity.getPhoto())
+                .test(entity.getTest().getName())
                 .build();
         Link selfLink = linkTo(methodOn(QuestionController.class).getQuestion(questionDto.getId())).withSelfRel();
         questionDto.add(selfLink);

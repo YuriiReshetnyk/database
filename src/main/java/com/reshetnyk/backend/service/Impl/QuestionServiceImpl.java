@@ -8,6 +8,7 @@ import com.reshetnyk.backend.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -16,33 +17,32 @@ public class QuestionServiceImpl implements QuestionService {
     @Autowired
     QuestionRepository questionRepository;
 
-    @Override
     public List<Question> findAll() {
         return questionRepository.findAll();
     }
 
-    @Override
     public Question findById(Integer id) {
         return questionRepository.findById(id)
                 .orElseThrow(() -> new QuestionNotFoundException(id));
     }
 
-    @Override
+    @Transactional
     public Question create(Question question) {
         questionRepository.save(question);
         return question;
     }
 
-    @Override
+    @Transactional
     public void update(Integer id, Question uQuestion) {
         Question question = questionRepository.findById(id)
                 .orElseThrow(() -> new QuestionNotFoundException(id));
         question.setQuestion(uQuestion.getQuestion());
         question.setPhoto(uQuestion.getPhoto());
+        question.setTest(uQuestion.getTest());
         questionRepository.save(question);
     }
 
-    @Override
+    @Transactional
     public void delete(Integer id) {
         Question question = questionRepository.findById(id)
                 .orElseThrow(() -> new QuestionNotFoundException(id));

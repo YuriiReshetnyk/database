@@ -21,6 +21,7 @@ public class ModuleDtoAssembler implements RepresentationModelAssembler<Module, 
                 .video(entity.getVideo())
                 .additionalInformation(entity.getAdditionalInformation())
                 .orderPosition(entity.getOrderPosition())
+                .course(entity.getCourse().getName())
                 .build();
         Link selfLink = linkTo(methodOn(ModuleController.class).getModule(moduleDto.getId())).withSelfRel();
         moduleDto.add(selfLink);

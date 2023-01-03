@@ -19,6 +19,7 @@ public class TestDtoAssembler implements RepresentationModelAssembler<Test, Test
                 .name(entity.getName())
                 .introduction(entity.getIntroduction())
                 .orderPosition(entity.getOrderPosition())
+                .course(entity.getCourse().getName())
                 .build();
         Link selfLink = linkTo(methodOn(TestController.class).getTest(testDto.getId())).withSelfRel();
         testDto.add(selfLink);

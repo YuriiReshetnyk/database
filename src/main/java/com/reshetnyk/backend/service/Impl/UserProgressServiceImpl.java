@@ -7,6 +7,7 @@ import com.reshetnyk.backend.service.UserProgressService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -15,33 +16,33 @@ public class UserProgressServiceImpl implements UserProgressService {
     @Autowired
     UserProgressRepository userProgressRepository;
 
-    @Override
     public List<UserProgress> findAll() {
         return userProgressRepository.findAll();
     }
 
-    @Override
     public UserProgress findById(Integer id) {
         return userProgressRepository.findById(id)
                 .orElseThrow(() -> new UserProgressNotFoundException(id));
     }
 
-    @Override
+    @Transactional
     public UserProgress create(UserProgress userProgress) {
         userProgressRepository.save(userProgress);
         return userProgress;
     }
 
-    @Override
+    @Transactional
     public void update(Integer id, UserProgress uUserProgress) {
         UserProgress userProgress = userProgressRepository.findById(id)
                 .orElseThrow(() -> new UserProgressNotFoundException(id));
         userProgress.setBeginTimestamp(uUserProgress.getBeginTimestamp());
         userProgress.setEndTimestamp(uUserProgress.getEndTimestamp());
+        userProgress.setUser(uUserProgress.getUser());
+        userProgress.setTest(uUserProgress.getTest());
         userProgressRepository.save(userProgress);
     }
 
-    @Override
+    @Transactional
     public void delete(Integer id) {
         UserProgress userProgress = userProgressRepository.findById(id)
                 .orElseThrow(() -> new UserProgressNotFoundException(id));

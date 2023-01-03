@@ -7,6 +7,7 @@ import com.reshetnyk.backend.domain.AnswerOption;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -15,33 +16,32 @@ public class AnswerOptionServiceImpl implements AnswerOptionService {
     @Autowired
     AnswerOptionRepository answerOptionRepository;
 
-    @Override
     public List<AnswerOption> findAll() {
         return answerOptionRepository.findAll();
     }
 
-    @Override
     public AnswerOption findById(Integer id) {
         return answerOptionRepository.findById(id)
                 .orElseThrow(() -> new AnswerOptionNotFoundException(id));
     }
 
-    @Override
+    @Transactional
     public AnswerOption create(AnswerOption answerOption) {
         answerOptionRepository.save(answerOption);
         return answerOption;
     }
 
-    @Override
+    @Transactional
     public void update(Integer id, AnswerOption uAnswerOption) {
         AnswerOption answerOption = answerOptionRepository.findById(id)
                 .orElseThrow(() -> new AnswerOptionNotFoundException(id));
         answerOption.setOption(uAnswerOption.getOption());
         answerOption.setIsAnswer(uAnswerOption.getIsAnswer());
+        answerOption.setQuestion(uAnswerOption.getQuestion());
         answerOptionRepository.save(answerOption);
     }
 
-    @Override
+    @Transactional
     public void delete(Integer id) {
         AnswerOption answerOption = answerOptionRepository.findById(id)
                 .orElseThrow(() -> new AnswerOptionNotFoundException(id));

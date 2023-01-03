@@ -74,6 +74,13 @@ public class ExceptionHandlerController extends ResponseEntityExceptionHandler {
     }
 
     @ResponseBody
+    @ExceptionHandler(ExtraTableNotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    String extraTableNotFoundHandler(ExtraTableNotFoundException ex) {
+        return ex.getMessage();
+    }
+
+    @ResponseBody
     @ExceptionHandler(UserProgressExistForUserException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
     String userProgressExistForUserHandler(UserProgressExistForUserException ex) {

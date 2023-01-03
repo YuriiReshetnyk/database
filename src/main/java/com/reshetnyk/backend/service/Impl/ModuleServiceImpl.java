@@ -7,6 +7,7 @@ import com.reshetnyk.backend.service.ModuleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -15,35 +16,35 @@ public class ModuleServiceImpl implements ModuleService {
     @Autowired
     ModuleRepository moduleRepository;
 
-    @Override
     public List<Module> findAll() {
         return moduleRepository.findAll();
     }
 
-    @Override
     public Module findById(Integer id) {
         return moduleRepository.findById(id)
                 .orElseThrow(() -> new ModuleNotFoundException(id));
     }
 
-    @Override
+    @Transactional
     public Module create(Module module) {
         moduleRepository.save(module);
         return module;
     }
 
-    @Override
+    @Transactional
     public void update(Integer id, Module uModule) {
         Module module = moduleRepository.findById(id)
                 .orElseThrow(() -> new ModuleNotFoundException(id));
         module.setName(uModule.getName());
         module.setText(uModule.getText());
+        module.setVideo(uModule.getVideo());
         module.setAdditionalInformation(uModule.getAdditionalInformation());
         module.setOrderPosition(uModule.getOrderPosition());
+        module.setCourse(uModule.getCourse());
         moduleRepository.save(module);
     }
 
-    @Override
+    @Transactional
     public void delete(Integer id) {
         Module module = moduleRepository.findById(id)
                 .orElseThrow(() -> new ModuleNotFoundException(id));

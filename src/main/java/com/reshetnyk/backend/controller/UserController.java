@@ -52,4 +52,10 @@ public class UserController {
         userService.delete(topicId);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
+    @PostMapping(value = "/createDatabases")
+    public ResponseEntity<?> createDatabases(){
+        userService.dynamicProcedure();
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }

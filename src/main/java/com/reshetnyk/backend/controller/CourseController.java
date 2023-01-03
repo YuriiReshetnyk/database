@@ -35,9 +35,9 @@ public class CourseController {
     }
 
     @PostMapping(value = "")
-    public ResponseEntity<CourseDto> addCourse(@RequestBody Course answerOptions) {
-        Course course = courseService.create(answerOptions);
-        CourseDto courseDto = courseDtoAssembler.toModel(course);
+    public ResponseEntity<CourseDto> addCourse(@RequestBody Course course) {
+        Course newCourse = courseService.create(course);
+        CourseDto courseDto = courseDtoAssembler.toModel(newCourse);
         return new ResponseEntity<>(courseDto, HttpStatus.CREATED);
     }
 
@@ -51,5 +51,11 @@ public class CourseController {
     public ResponseEntity<?> deleteCourse(@PathVariable Integer courseId) {
         courseService.delete(courseId);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/maxCoursePrice")
+    public ResponseEntity<Integer> getMaxCoursePrice() {
+        Integer maxPrice = courseService.findMaxCoursePrice();
+        return new ResponseEntity<>(maxPrice, HttpStatus.OK);
     }
 }
